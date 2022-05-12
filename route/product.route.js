@@ -2,13 +2,13 @@
 
 const router = require("express").Router()
 //const productSchema = require('../model/product.model')
-const curdoprations = require('../model/crud.oprations')
+const curdoperations = require('../model/crud.operations')
 const constants = require('../constants/constants.status');
 
 
 router.post('/addProduct', async(req,res)=>{
     try{
-       curdoprations.addItem(req,res)       
+       curdoperations.addItem(req,res)       
     }catch(error){
         res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS, message:constants.USER_STATUS.NO_DATA}) 
     }
@@ -16,7 +16,7 @@ router.post('/addProduct', async(req,res)=>{
 
 router.get('/getAllProducts',async(req,res)=>{
     try{
-        curdoprations.getAllItems(req,res)
+        curdoperations.getAllItems(req,res)
     }catch(error){
          res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS,message:constants.USER_STATUS.NO_DATA})
     }
@@ -24,7 +24,7 @@ router.get('/getAllProducts',async(req,res)=>{
 
 router.get('/getSingleItem',async(req,res)=>{
     try{
-        curdoprations.getSingleItem(req,res)
+        curdoperations.getSingleItem(req,res)
     }catch(error){
         res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS,message:constants.USER_STATUS.NO_DATA})
     }
@@ -32,7 +32,7 @@ router.get('/getSingleItem',async(req,res)=>{
 
 router.put('/updateProduct',async(req,res)=>{
     try{
-        curdoprations.updateItems(req,res)
+        curdoperations.updateItems(req,res)
     }catch(error){
         res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS,message:constants.USER_STATUS.NO_DATA})
     }
@@ -40,7 +40,7 @@ router.put('/updateProduct',async(req,res)=>{
 
 router.delete('/deleteProduct',async(req,res)=>{
     try{
-        curdoprations.deleteProduct(req,res)
+        curdoperations.deleteProduct(req,res)
         
     }catch(error){
         res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS,message:constants.USER_STATUS.NO_DATA})
@@ -49,7 +49,7 @@ router.delete('/deleteProduct',async(req,res)=>{
 
 router.get('/searchItem/:key',async(req,res)=>{
 try{
-    curdoprations.searchItem(req,res)
+    curdoperations.searchItem(req,res)
 }catch(error){
     res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS,message:constants.USER_STATUS.NO_DATA})
 }
@@ -57,7 +57,7 @@ try{
 
 router.get('/filterItemsPrice',async(req,res)=>{
 try{
-    curdoprations.priceFilter(req,res)
+    curdoperations.priceFilter(req,res)
 }catch(error){
     res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS,message:constants.USER_STATUS.NO_DATA})
 

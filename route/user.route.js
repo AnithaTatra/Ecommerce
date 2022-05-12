@@ -7,6 +7,12 @@ var constants = require('../constants/constants.status');
 const{validation} = require('../model/fieldsValidation')
 const mailSending = require('../middleware/email')
 //const {authVerification} = require('../middleware/auth');
+const multer = require('multer');
+const xlsx = require('xlsx');
+const storageData = require('../middleware/multer');
+const path = require('path');
+
+const upload = multer({storage:storageData.storage})
 
 router.post('/signUp',async(req,res)=>{
     try{
@@ -80,6 +86,21 @@ router.post('/signUp',async(req,res)=>{
 
      }catch(error){
          res.status(400).json({status:constants.USER_STATUS.FAILURE_STATUS,message:constants.USER_STATUS.NO_DATA})
+     }
+ });
+
+ router.post('/uploadFile',upload.single('file'),async(req,res)=>{
+     try{
+         let path = './uploads/'+req.file.filename
+         console.log("file...",req.file.filename)
+         console.log("path...",path);
+         let sheetDetail = xlsx.readFile(path);
+         let sheetData = sheetDetail.SheetNames;
+         let result = xlsx.utils.sheet_to_json(sheetDetail.Sheets[sheetData[0]])
+         console.log("list..",result)
+         return res.status(200).json({status:'success',message:'File upload success'})
+     }catch(error){
+         return res.status(500).json({status:'failure',message:error.message})
      }
  })
 module.exports = router;
