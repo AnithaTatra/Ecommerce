@@ -95,10 +95,17 @@ router.post('/signUp',async(req,res)=>{
          console.log("file...",req.file.filename)
          console.log("path...",path);
          let sheetDetail = xlsx.readFile(path);
-         let sheetData = sheetDetail.SheetNames;
-         let result = xlsx.utils.sheet_to_json(sheetDetail.Sheets[sheetData[0]])
-         console.log("list..",result)
-         return res.status(200).json({status:'success',message:'File upload success'})
+         sheetDetail.SheetNames.forEach(function(SheetName){
+            let sheetData = sheetDetail.Sheets[SheetName];
+            let data = xlsx.utils.sheet_to_json(sheetData[0]);
+            if (data.length > 0) {
+                values.push(data);
+               return res.json({status: true, message: 'Created ' + data.length + 'Users.'})
+            } else {
+              return  res.json({status: false, message: 'No records found'})
+            }
+         })
+       
      }catch(error){
          return res.status(500).json({status:'failure',message:error.message})
      }
